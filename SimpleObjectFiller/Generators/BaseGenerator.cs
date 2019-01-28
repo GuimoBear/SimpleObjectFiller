@@ -3,9 +3,11 @@ using System;
 
 namespace SimpleObjectFiller.Generators
 {
-    public abstract class BaseGenerator<TType> : IDefaultValueGeneratorRole<TType>
+    public abstract class BaseGenerator<TType> : IBaseGenerator, IDefaultValueGeneratorRole<TType>
     {
         protected static readonly Random random = new Random(247558);
+
+        public Type GeneratedType => typeof(TType);
 
         protected bool hasDefaultValue;
         private TType defaultValue;

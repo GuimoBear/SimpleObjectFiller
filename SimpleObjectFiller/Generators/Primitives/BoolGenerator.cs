@@ -2,7 +2,6 @@
 
 namespace SimpleObjectFiller.Generators.Primitives
 {
-
     public class BoolGenerator : BaseGenerator<bool>, ITrueWeightBoolGeneratorRole
     {
         public double? TrueWeight { get; set; }

@@ -14,7 +14,7 @@ namespace SimpleObjectFiller.Generators
             set
             {
                 if (value.HasValue && (value.Value < 0 || value.Value >= 1))
-                    throw new ArgumentException("The NullWeight must be greater than or equal to 0 and less than 1");
+                    throw new ArgumentException("The NullWeight must be greater than or equal to 0.0 and less than 1.0");
                 nullWeight = value;
             }
         }

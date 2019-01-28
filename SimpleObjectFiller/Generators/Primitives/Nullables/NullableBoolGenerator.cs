@@ -11,7 +11,7 @@ namespace SimpleObjectFiller.Generators.Primitives.Nullables
             set
             {
                 if (value.HasValue && (value.Value < 0 || value.Value >= 1))
-                    throw new ArgumentException("The TrueWeight must be greater than or equal to 0 and less than 1");
+                    throw new ArgumentException("The TrueWeight must be greater than or equal to 0.0 and less than 1.0");
                 trueWeight = value;
             }
         }
@@ -20,21 +20,41 @@ namespace SimpleObjectFiller.Generators.Primitives.Nullables
         {
             if (hasDefaultValue)
                 return DefaultValue;
+            var tempRndValue = random.NextDouble();
+            if (TrueWeight.HasValue && NullWeight.HasValue)
+            {
+                var tempTrueWeight = TrueWeight.Value;
+                var tempNullWeight = NullWeight.Value + tempTrueWeight;
+                if (tempRndValue <= tempTrueWeight)
+                    return true;
+                if (tempRndValue <= tempNullWeight)
+                    return null;
+                return false;
+            }
+            int tempIntValue = random.Next();
+            bool isEven = tempIntValue % 2 == 0;
             if (TrueWeight.HasValue)
             {
-                bool isLessThanOrEqualTheTrueWeight = random.NextDouble() <= TrueWeight.Value;
-                if (!isLessThanOrEqualTheTrueWeight)
-                {
-                    if (NullWeight.HasValue && random.NextDouble() <= NullWeight.Value)
-                        return null;
-                    else if (NullWeight.HasValue)
-                        return false;
-                    else
-                        return random.Next() % 2 == 0 ? null : (bool?)false;
-                }
-                return true;
+                if (tempRndValue <= TrueWeight.Value)
+                    return true;
+                return isEven ? null : (bool?)false;
             }
-            return random.Next() % 2 == 0;
+            if(NullWeight.HasValue)
+            {
+                if (tempRndValue <= NullWeight.Value)
+                    return null;
+                return isEven ? true : false;
+            }
+            switch(tempIntValue % 3)
+            {
+                case (0):
+                    return null;
+                case (1):
+                    return true;
+                case (2):
+                    return false;
+            }
+            return true;
         }
     }
 }
