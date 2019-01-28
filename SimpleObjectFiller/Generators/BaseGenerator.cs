@@ -5,7 +5,7 @@ namespace SimpleObjectFiller.Generators
 {
     public abstract class BaseGenerator<TType> : IBaseGenerator, IDefaultValueGeneratorRole<TType>
     {
-        protected static readonly Random random = new Random(247558);
+        protected static readonly RandomGenerator random = new RandomGenerator();
 
         public Type GeneratedType => typeof(TType);
 

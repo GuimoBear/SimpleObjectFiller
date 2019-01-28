@@ -1,4 +1,5 @@
 ﻿using SimpleObjectFiller.Generators.Contracts;
+using System;
 
 namespace SimpleObjectFiller.Generators
 {
